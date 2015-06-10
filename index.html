@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Doop Framework 101 : Tutorial site for PLDI 2015">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-    <title>Doop Framework 101</title>
+    <title>Doop Framework 101 by plast-lab</title>
   </head>
 
   <body>
+    <header>
+      <div class="inner">
+        <h1>Doop Framework 101</h1>
+        <h2>Tutorial site for PLDI 2015</h2>
+        <a href="https://github.com/plast-lab/doop-pldi15-tutorial" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/plast-lab/doop-pldi15-tutorial">View on GitHub</a>
-
-          <h1 id="project_title">Doop Framework 101</h1>
-          <h2 id="project_tagline">Tutorial site for PLDI 2015</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/plast-lab/doop-pldi15-tutorial/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/plast-lab/doop-pldi15-tutorial/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h3>
 <a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h3>
 
 <p><a href="http://doop.program-analysis.org/">Doop</a> is a <strong>declarative</strong> framework for Static Pointer Analysis of Java programs. It provides a huge variety of analyses and also the surrounding scaffolding to run an analysis end-to-end (fact generation, processing, statistics etc).</p>
@@ -59,10 +56,10 @@ $ source environment.sh
 
 <p>We invoke actions on our Datalog engine using <code>bloxbatch</code>.</p>
 
-<pre><code>$ bloxbatch -db DB -create -overwrite               # create our database
-$ bloxbatch -db DB -addBlock -file ancestor.logic   # load our rules
-$ bloxbatch -db DB -execute -file facts.logic       # load our facts
-$ bloxbatch -db DB -print ancestor                  # print computed results
+<pre><code>$ bloxbatch -db DB -create -overwrite              # create our database
+$ bloxbatch -db DB -addBlock -file ancestor.logic  # load our rules
+$ bloxbatch -db DB -execute -file facts.logic      # load our facts
+$ bloxbatch -db DB -print ancestor                 # print computed results
 predicate: Ancestor(Person, Person)
 ...
 /--- start of Ancestor facts ---\
@@ -73,18 +70,30 @@ predicate: Ancestor(Person, Person)
 </code></pre>
 
 <p>The line <code>Person(x), Name(x:n) -&gt; string(n).</code> states that a person (represented by an internal ID) can be constructed by providing a string in the <code>Name</code> predicate. This is known as <em>refmode</em>. This is also shown in the print output. For example, <code>[1]john</code> means that the string <em>"john"</em> is used to create a Person with the ID <em>1</em>.</p>
-      </section>
+
+<h3>
+<a id="doop-examples" class="anchor" href="#doop-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Doop Examples</h3>
+
+<p>Now, let's focus on more meaningful examples using Doop directly. Our running example will be <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/gh-pages/examples/Example.java">Example.java</a>.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/plast-lab/doop-pldi15-tutorial/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/plast-lab/doop-pldi15-tutorial/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/plast-lab/doop-pldi15-tutorial"></a> is maintained by <a href="https://github.com/plast-lab">plast-lab</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Doop Framework 101 maintained by <a href="https://github.com/plast-lab">plast-lab</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
+  
   </body>
 </html>
