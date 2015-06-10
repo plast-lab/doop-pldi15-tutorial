@@ -32,7 +32,7 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a id="what-is-doop" class="anchor" href="#what-is-doop" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Doop?</h3>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h3>
 
 <p><a href="http://doop.program-analysis.org/">Doop</a> is a <strong>declarative</strong> framework for Static Pointer Analysis of Java programs. It provides a huge variety of analyses and also the surrounding scaffolding to run an analysis end-to-end (fact generation, processing, statistics etc).</p>
 
@@ -63,7 +63,16 @@ $ source environment.sh
 $ bloxbatch -db DB -addBlock -file ancestor.logic   # load our rules
 $ bloxbatch -db DB -execute -file facts.logic       # load our facts
 $ bloxbatch -db DB -print ancestor                  # print computed results
+predicate: Ancestor(Person, Person)
+...
+/--- start of Ancestor facts ---\
+  [1]john, [0]harry
+  [2]dave, [0]harry
+  [2]dave, [1]john
+\---- end of Ancestor facts ----/
 </code></pre>
+
+<p>The line <code>Person(x), Name(x:n) -&gt; string(n).</code> states that a person (represented by an internal ID) can be constructed by providing a string in the <code>Name</code> predicate. This is known as <em>refmode</em>. This is also shown in the print output. For example, <code>[1]john</code> means that the string <em>"john"</em> is used to create a Person with the ID <em>1</em>.</p>
       </section>
     </div>
 
