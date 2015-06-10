@@ -38,8 +38,7 @@
 
 <p>The declarative nature of Doop stems form the fact that is uses <strong>Datalog</strong> (or more specifically <em>LogiQL</em>, a Datalog dialog developped by <a href="http://www.logicblox.com/">LogicBlox</a>) to specify an analysis.</p>
 
-<p>The building blocks come in the form of <strong>predicates</strong>. Our facts (a.k.a <em>EDB</em> logic) are represented as such.
-E.g. <code>Person("John")</code> or <code>Parent("John", "Johnny jr")</code>.</p>
+<p>The building blocks come in the form of <strong>predicates</strong>. Our facts (a.k.a <em>EDB</em> logic) are represented as such. E.g. <code>Person("John")</code> or <code>Parent("John", "Johnny jr")</code>.</p>
 
 <p>Then we have <strong>rules</strong> (a.k.a <em>IDB</em> logic) to infer new information. When a set of things are known to be true then we can infer new things. This continues until no new information can be extracted.</p>
 
@@ -57,7 +56,7 @@ $ cd doop
 <h3>
 <a id="toy-example" class="anchor" href="#toy-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Toy Example</h3>
 
-<p>We want compute the ancestors for a set of people. We invoke actions on our Datalog engine using <code>bloxbatch</code>.</p>
+<p>We want to compute the ancestors for a set of people. We invoke actions on our Datalog engine using <code>bloxbatch</code>.</p>
 
 <pre><code>$ bloxbatch -db DB -create -overwrite               # create our database
 $ bloxbatch -db DB -addBlock -file ancestor.logic   # load our rules
