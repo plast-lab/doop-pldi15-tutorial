@@ -1,0 +1,8 @@
+// Declarations
+person(x), name(x:n) -> string(n).
+parent(x,y) -> person(x), person(y).
+ancestor(x,y) -> person(x), person(y).
+
+// Rules
+ancestor(x,y) <- parent(x,y).
+ancestor(x,y) <- ancestor(x,z), ancestor(z,y).
