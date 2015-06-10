@@ -34,21 +34,23 @@
         <h2>
 <a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
 
-<p><a href="http://doop.program-analysis.org/">Doop</a> is a <strong>declarative</strong> framework for Static Pointer Analysis of Java programs. It provides a huge variety of analyses and also the surrounding scaffolding to run an analysis end-to-end (fact generation, processing, statistics etc).</p>
+<p><a href="http://doop.program-analysis.org/">Doop</a> is a <strong>declarative</strong> framework for Static Analysis of Java programs, centered on a variety of <strong>pointer analysis</strong> algorithms. Doop provides a huge variety of analyses and also the surrounding scaffolding to run an analysis end-to-end (fact generation, processing, statistics, etc.).</p>
 
-<p>The declarative nature of Doop stems form the fact that is uses <strong>Datalog</strong> (more specifically <em>LogiQL</em>, a Datalog dialog developped by <a href="http://www.logicblox.com/">LogicBlox</a>) to specify an analysis.</p>
+<p>The declarative nature of Doop stems from its use of <strong>Datalog</strong> (more specifically <em>LogiQL</em>, a Datalog dialect developed by <a href="http://www.logicblox.com/">LogicBlox</a>) to specify an analysis.</p>
 
-<p>The building blocks come in the form of <strong>predicates</strong>. Our facts (a.k.a <em>EDB</em> logic) are represented as such. E.g. <code>Person("John")</code> or <code>Parent("John", "Johnny jr")</code>.</p>
+<p>The building blocks of Datalog programs come in the form of <strong>predicates</strong>. Our input facts (a.k.a. <em>EDB</em> logic) are represented as predicate values, e.g., <code>Person("John")</code> or <code>Parent("John", "Johnny jr")</code>.</p>
 
-<p>Then we have <strong>rules</strong> (a.k.a <em>IDB</em> logic) to infer new information from things already known to be true. This continues until no new information can be extracted. E.g.</p>
+<p>Then we have <strong>rules</strong> (a.k.a. <em>IDB</em> logic) to infer new information from facts already known to be true. This continues until no new information can be extracted. E.g.,</p>
 
 <pre><code>Ancestor(x, y) &lt;- Parent(x, y).
 </code></pre>
 
-<p>Doop is available at bitbucket as a <a href="https://bitbucket.org/yanniss/doop">public repo</a>.</p>
+<p>To familiarize yourself with Datalog evaluation, you may want to try the <a href="https://developer.logicblox.com/content/docs4/tutorial/repl/section/split.html">LogicBlox REPL tutorial</a>.</p>
 
 <h3>
-<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h3>
+<a id="doop-setup" class="anchor" href="#doop-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Doop Setup</h3>
+
+<p>Doop is available at bitbucket as a <a href="https://bitbucket.org/yanniss/doop">public repo</a>.</p>
 
 <pre><code>$ cd tutorial_root_folder
 $ source environment.sh
