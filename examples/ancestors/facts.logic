@@ -1,6 +1,6 @@
-+person(x), +name(x:"dave").
-+person(x), +name(x:"john").
-+person(x), +name(x:"harry").
++Person(x), +Name(x:"dave").
++Person(x), +Name(x:"john").
++Person(x), +Name(x:"harry").
 
-+parent(x,y) <- name(x:"dave"), name(y:"john").
-+parent(x,y) <- name(x:"john"), name(y:"harry").
++Parent(x,y) <- Name(x:"dave"), Name(y:"john").
++Parent(x,y) <- Name(x:"john"), Name(y:"harry").

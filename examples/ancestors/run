@@ -10,4 +10,4 @@ echo "adding facts ..."
 bloxbatch -db DB -execute -file facts.logic
 
 echo "printing results ..."
-bloxbatch -db DB -print ancestor
+bloxbatch -db DB -print Ancestor
