@@ -32,9 +32,39 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a id="so-what-is-doop" class="anchor" href="#so-what-is-doop" aria-hidden="true"><span class="octicon octicon-link"></span></a>So what is Doop?</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p><a href="http://doop.program-analysis.org/">Doop</a> is a <strong>declarative</strong> framework for Static Pointer Analysis of Java programs. It provides a huge variety of analyses and also all the surrounding scaffolding to run an analysis end-to-end (fact generation, processing, statistics and metrics, etc).</p>
+
+<p>The declarative nature of Doop stems form the fact that is uses <strong>Datalog</strong> (or more specifically <em>LogiQL</em>, a Datalog dialog developped by <a href="http://www.logicblox.com/">LogicBlox</a>) to specify an analysis.</p>
+
+<p>The building blocks come in the form of <strong>predicates</strong>. Our facts (a.k.a <em>EDB</em> logic) are represented as such.
+E.g. <code>Person("John")</code> or <code>Parent("John", "Johnny jr")</code>.</p>
+
+<p>Then we have <strong>rules</strong> (a.k.a <em>IDB</em> logic) to infer new information. When a set of things are known to be true then we can infer new things. This continues until no new information can be extracted.</p>
+
+<pre><code> Ancestor(x, y) &lt;- Parent(x, y).
+</code></pre>
+
+<h3>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h3>
+
+<pre><code>$ cd doop_root_folder
+$ source environment.sh
+$ cd doop
+</code></pre>
+
+<h3>
+<a id="toy-example" class="anchor" href="#toy-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Toy Example</h3>
+
+<p>We want compute the ancestors for a set of people. We invoke actions on our Datalog engine using <code>bloxbatch</code>.</p>
+
+<pre><code>$ bloxbatch -db DB -create -overwrite               # create our database
+$ bloxbatch -db DB -addBlock -file ancestor.logic   # load our rules
+$ bloxbatch -db DB -execute -file facts.logic       # load our facts
+</code></pre>
+
+<p>e</p>
 
 <pre><code>VarPointsTo(?heap, ?var) &lt;-
    AssignHeapAllocation(?heap, ?var).
