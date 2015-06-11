@@ -188,6 +188,37 @@ $ cd ../doop
 </code></pre>
 
 <p>The line <code>Instruction:Method[?invocation] = ?fromMethod</code> found in the previous query uses a special form of predicate known as <em>functional</em> predicate. Those are similar to normal ones, but they act like a map. Values found between the square brackets are mapped to only on value on the right.</p>
+
+<h3>
+<a id="doop--dacapo-benchmarks" class="anchor" href="#doop--dacapo-benchmarks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Doop + DaCapo Benchmarks</h3>
+
+<p>We frequently analyze various programs from the <a href="http://www.dacapobench.org/">DaCapo Benchmarks suite</a> using a variety of advanced analyses. E.g., let's analyze the <code>antlr</code> benchmark using a <em>2 type-sensitive</em> analysis.</p>
+
+<pre><code>./doop -a 2-type-sensitive+heap -j benchmarks/dacapo-2006/antlr.jar benchmarks/dacapo-2006/antlr-deps.jar  --jre 1.7 --dacapo
+</code></pre>
+
+<p>Towards the end of execution, Doop will report a set of metrics gathered from the analyzed program. Those metrics are computed through the use of various queries on the resulting database. Those are found under <code>logic/addons/statistics</code>.</p>
+
+<h5>
+<a id="query-3" class="anchor" href="#query-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #3</h5>
+
+<p>For example, one metric is the computation of casts that potentially may fail. It joins input facts as well as facts computed during execution to infer casts where the related variable may point to an object that is incompatible with the type of the cast.</p>
+
+<pre><code>_Stats:Simple:PotentiallyFailingCast(?type, ?from, ?to) &lt;-
+    _Stats:Simple:ReachableCast(_, ?type, ?to, ?from),
+    Stats:Simple:InsensVarPointsTo(?heap, ?from),
+    HeapAllocation:Type[?heap] = ?heaptype,
+    ! AssignCompatible(?type, ?heaptype).
+</code></pre>
+
+<p>The use of <code>_</code> as a predicate parameter denotes that we don't care for a specific value. It represent a parameter that is not bounded.</p>
+
+<p>Datalog supports the use of aggregate functions. One such function is <em>count</em>. E.g., if we would like to compute the total number of VarPointsTo entries we could use the following.</p>
+
+<pre><code>$ bloxbatch -db last-analysis -query \
+'_[] = ?n &lt;- agg&lt;&lt;?n = count()&gt;&gt; VarPointsTo(_, _, _, _).'
+  4569312
+</code></pre>
       </section>
     </div>
 
