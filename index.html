@@ -132,7 +132,7 @@ $ cd ../doop
 
 <p>Our first query would be to ask for <em>VarPointTo</em> entries of variables declared in <em>Example.morePlay()</em>.</p>
 
-<pre><code>$ bl -db last-analysis -query \
+<pre><code>$ bloxbatch -db last-analysis -query \
 '_(?var, ?heap) &lt;- VarPointsTo(?var, ?heap), Var:DeclaringMethod(?var, "&lt;Example: void morePlay(Cat)&gt;").'
   Example.morePlay/@this, Example.main/new Example/0
   Example.morePlay/r0, Example.main/new Example/0
@@ -156,6 +156,30 @@ $ cd ../doop
 </code></pre>
 
 <p>Note here that Doop analyzes Java <strong>bytecode</strong>. Input facts are generated using Soot, which transforms Java bytecode to <a href="http://en.wikipedia.org/wiki/Soot_%28software%29#Jimple">Jimple</a>, a language based on <em>three address code</em>. As a result new temp variables are introduced and also original variable names might be lost (they can be retained through specific flags in javac and Soot).</p>
+
+<hr>
+
+<p>A more complicated query can be found in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/gh-pages/code/examples/query2.logic">query2.logic</a>. Essentially, we compute a transitive closure on the <em>CallGraphEdge</em> relation. The logic used in a query can be as complicated as in any "normal" Datalog program.</p>
+
+<pre><code>$ bloxbatch -db last-analysis -query -file ../examples/query2.logic
+  &lt;Example: void main(java.lang.String[])&gt;, &lt;Example: void test(int)&gt;
+  &lt;Example: void test(int)&gt;, &lt;Example: void morePlay(Cat)&gt;
+  &lt;Example: void main(java.lang.String[])&gt;, &lt;Example: void morePlay(Cat)&gt;
+  &lt;Example: void test(int)&gt;, &lt;Cat: void setParent(Cat)&gt;
+  &lt;Example: void main(java.lang.String[])&gt;, &lt;Cat: void setParent(Cat)&gt;
+  &lt;Example: void test(int)&gt;, &lt;Cat: Cat getParent()&gt;
+  &lt;Example: void morePlay(Cat)&gt;, &lt;Cat: Cat getParent()&gt;
+  &lt;Example: void main(java.lang.String[])&gt;, &lt;Cat: Cat getParent()&gt;
+  &lt;Example: void test(int)&gt;, &lt;Cat: void play()&gt;
+  &lt;Example: void morePlay(Cat)&gt;, &lt;Cat: void play()&gt;
+  &lt;Animal: Animal playWith(Animal)&gt;, &lt;Cat: void play()&gt;
+  &lt;Example: void main(java.lang.String[])&gt;, &lt;Cat: void play()&gt;
+  &lt;Example: void test(int)&gt;, &lt;Dog: void play()&gt;
+  &lt;Example: void main(java.lang.String[])&gt;, &lt;Dog: void play()&gt;
+  &lt;Example: void test(int)&gt;, &lt;Animal: Animal playWith(Animal)&gt;
+  &lt;Example: void morePlay(Cat)&gt;, &lt;Animal: Animal playWith(Animal)&gt;
+  &lt;Example: void main(java.lang.String[])&gt;, &lt;Animal: Animal playWith(Animal)
+</code></pre>
       </section>
     </div>
 
