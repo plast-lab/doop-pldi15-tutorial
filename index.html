@@ -128,9 +128,12 @@ $ cd ../doop
 <p>Note here that this rule is <strong>recursive</strong>; previously known facts about the <em>VarPointTo</em> relation may lead to the inference of additional facts. Doop analysis rules are <strong>mutually recursive</strong> in complex ways.</p>
 
 <h3>
-<a id="querying-the-database" class="anchor" href="#querying-the-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Querying the database</h3>
+<a id="accessing-the-database" class="anchor" href="#accessing-the-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Accessing the database</h3>
 
-<p>Our first query would be to ask for <em>VarPointTo</em> entries of variables declared in <em>Example.morePlay()</em>.</p>
+<h5>
+<a id="query-1" class="anchor" href="#query-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #1</h5>
+
+<p>Our first query is to ask for <em>VarPointTo</em> entries of variables declared in <em>Example.morePlay()</em>.</p>
 
 <pre><code>$ bloxbatch -db last-analysis -query \
 '_(?var, ?heap) &lt;- VarPointsTo(?var, ?heap), Var:DeclaringMethod(?var, "&lt;Example: void morePlay(Cat)&gt;").'
@@ -158,6 +161,9 @@ $ cd ../doop
 <p>Note here that Doop analyzes Java <strong>bytecode</strong>. Input facts are generated using Soot, which transforms Java bytecode to <a href="http://en.wikipedia.org/wiki/Soot_%28software%29#Jimple">Jimple</a>, a language based on <em>three address code</em>. As a result new temp variables are introduced and also original variable names might be lost (they can be retained through specific flags in javac and Soot).</p>
 
 <hr>
+
+<h5>
+<a id="query-2" class="anchor" href="#query-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #2</h5>
 
 <p>A more complicated query can be found in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/gh-pages/code/examples/query2.logic">query2.logic</a>. Essentially, we compute a transitive closure on the <em>CallGraphEdge</em> relation. The logic used in a query can be as complicated as in any "normal" Datalog program.</p>
 
