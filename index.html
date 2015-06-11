@@ -47,18 +47,20 @@
 
 <p>To familiarize yourself with Datalog evaluation, you may want to try the <a href="https://developer.logicblox.com/content/docs4/tutorial/repl/section/split.html">LogicBlox REPL tutorial</a>.</p>
 
-<h3>
-<a id="doop--datalog-setup" class="anchor" href="#doop--datalog-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Doop + Datalog Setup</h3>
+<h2>
+<a id="doop--datalog-setup" class="anchor" href="#doop--datalog-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Doop + Datalog Setup</h2>
 
-<p>Please use engine version 3.10 for this tutorial and download+unpack the main tutorial file from the links at the top of the page. If you are following this tutorial off-line, the relevant files should exist in the
-archive you copied.</p>
+<p>Doop is available at bitbucket as a <a href="https://bitbucket.org/yanniss/doop">public repo</a>.</p>
 
-<pre><code>$ cd tutorial_root_folder
-$ source environment.sh
+<p>Please use LogicBlox engine version 3.10.X for this tutorial and download+unpack the main tutorial file from the links at the top of the page. Put the engine (or a symbolic link to it) under the directory <code>code</code>. Also, clone Doop under the same directory. If you are following this tutorial off-line, the relevant files should exist in the archive you copied.</p>
+
+<p>Issue the following command to setup the environment.</p>
+
+<pre><code>$ source code/environment.sh
 </code></pre>
 
-<h3>
-<a id="toy-example" class="anchor" href="#toy-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Toy Example</h3>
+<h2>
+<a id="toy-example" class="anchor" href="#toy-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Toy Example</h2>
 
 <p>We want to compute the ancestors for a set of people. Our rules (left-arrow notation) along with their type declarations (right-arrow notation) are in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/gh-pages/code/examples/ancestors/ancestors.logic">ancestors.logic</a>. Our facts (a.k.a. delta logic) are in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/gh-pages/code/examples/ancestors/facts.logic">facts.logic</a>. The <code>+</code> operator in front of the delta predicates denotes that we want to add facts to our database (we could also remove or update facts).</p>
 
@@ -82,17 +84,16 @@ predicate: Ancestor(Person, Person)
 <h2>
 <a id="doop-examples" class="anchor" href="#doop-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Doop Examples</h2>
 
-<p>Now let's focus on more meaningful examples using Doop directly. Doop is available at bitbucket as a <a href="https://bitbucket.org/yanniss/doop">public repo</a>.</p>
+<p>Now let's focus on more meaningful examples using Doop directly. We will use a running example, found in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/gh-pages/code/examples/Example.java">Example.java</a>.</p>
 
-<p>We will use a running example, found in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/gh-pages/code/examples/Example.java">Example.java</a>.</p>
-
-<pre><code>$ cd doop
+<pre><code>$ cd code/examples
 $ mkjar Example.java   # create Example.jar
+$ cd ../doop
 </code></pre>
 
-<p>We will run a simple naive analysis (<code>-a naive</code> option) on the generated jar file (<code>-j Example.jar</code> option). This analysis has only a few basic rules but it's a good representative skeleton of actual analyses. Since Doop performs a <strong>whole program analysis</strong>, the library will be analyzed along with application code. With the option <code>--jre 1.7</code> we specify the desired version of the library. </p>
+<p>We will run a simple naive analysis (<code>-a naive</code> option) on the generated jar file (<code>-j ../examples/Example.jar</code> option). This analysis has only a few basic rules but it's a good representative skeleton of actual analyses. Since Doop performs a <strong>whole program analysis</strong>, the library will be analyzed along with application code. With the option <code>--jre 1.7</code> we specify the desired version of the library. </p>
 
-<pre><code>./doop -a naive -j Example.jar --jre 1.7 --no-stats
+<pre><code>./doop -a naive -j ../examples/Example.jar --jre 1.7 --no-stats
 </code></pre>
 
 <p>After the analysis has run, we can gather results by issuing queries directly to the database.</p>
@@ -126,11 +127,35 @@ $ mkjar Example.java   # create Example.jar
 
 <p>Note here that this rule is <strong>recursive</strong>; previously known facts about the <em>VarPointTo</em> relation may lead to the inference of additional facts. Doop analysis rules are <strong>mutually recursive</strong> in complex ways.</p>
 
-<h2>
-<a id="queries" class="anchor" href="#queries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Queries</h2>
-
 <h3>
-<a id="objects" class="anchor" href="#objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Objects</h3>
+<a id="querying-the-database" class="anchor" href="#querying-the-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Querying the database</h3>
+
+<p>Our first query would be to ask for <em>VarPointTo</em> entries of variables declared in <em>Example.morePlay()</em>.</p>
+
+<pre><code>$ bl -db last-analysis -query \
+'_(?var, ?heap) &lt;- VarPointsTo(?var, ?heap), Var:DeclaringMethod(?var, "&lt;Example: void morePlay(Cat)&gt;").'
+  Example.morePlay/@this, Example.main/new Example/0
+  Example.morePlay/r0, Example.main/new Example/0
+  Example.morePlay/r3, Example.test/new Cat/1
+  Example.morePlay/r4, Example.test/new Cat/1
+  Example.morePlay/r1, Example.test/new Cat/1
+  Example.morePlay/@param0, Example.test/new Cat/1
+  Example.morePlay/r2, Example.test/new Cat/2
+  Example.morePlay/r3, Example.test/new Cat/2
+  Example.morePlay/r4, Example.test/new Cat/2
+</code></pre>
+
+<p>The string provided to the <code>-query</code> flag can be a set of left and right arrow Datalog rules. Newly created predicates have to start with <code>_</code> since they will only exist for the duration of the query evaluation. Refmode values can be used directly, and the engine will automatically substitute them with their internal IDs. E.g., the following part</p>
+
+<pre><code>Var:DeclaringMethod(?var, "&lt;Example: void morePlay(Cat)&gt;")
+</code></pre>
+
+<p>is equivalent to</p>
+
+<pre><code>Var:DeclaringMethod(?var, ?method), MethodSignature:Value(?method:"&lt;Example: void morePlay(Cat)&gt;")
+</code></pre>
+
+<p>Note here that Doop analyzes Java <strong>bytecode</strong>. Input facts are generated using Soot, which transforms Java bytecode to <a href="http://en.wikipedia.org/wiki/Soot_%28software%29#Jimple">Jimple</a>, a language based on <em>three address code</em>. As a result new temp variables are introduced and also original variable names might be lost (they can be retained through specific flags in javac and Soot).</p>
       </section>
     </div>
 
