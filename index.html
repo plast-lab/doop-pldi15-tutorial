@@ -154,6 +154,8 @@ $ cd ../doop
 
 <pre><code>Var:DeclaringMethod(?var, ?method), MethodSignature:Value(?method:"&lt;Example: void morePlay(Cat)&gt;")
 </code></pre>
+
+<p>Note here that Doop analyzes Java <strong>bytecode</strong>. Input facts are generated using Soot, which transforms Java bytecode to <a href="http://en.wikipedia.org/wiki/Soot_%28software%29#Jimple">Jimple</a>, a language based on <em>three address code</em>. As a result new temp variables are introduced and also original variable names might be lost (they can be retained through specific flags in javac and Soot).</p>
       </section>
     </div>
 
