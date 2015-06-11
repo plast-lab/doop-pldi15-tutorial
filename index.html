@@ -38,9 +38,9 @@
 
 <p>The declarative nature of Doop stems from its use of <strong>Datalog</strong> (more specifically <em>LogiQL</em>, a Datalog dialect developed by <a href="http://www.logicblox.com/">LogicBlox</a>) to specify an analysis.</p>
 
-<p>The building blocks of Datalog programs come in the form of <strong>predicates</strong>. Our input facts (a.k.a. <em>EDB</em> logic) are represented as predicate values, e.g., <code>Person("John")</code> or <code>Parent("John", "Johnny jr")</code>.</p>
+<p>The building blocks of Datalog programs come in the form of <strong>predicates</strong>. Our input facts (a.k.a. EDB logic) are represented as predicate values, e.g., <code>Person("John")</code> or <code>Parent("John", "Johnny jr")</code>.</p>
 
-<p>Then we have <strong>rules</strong> (a.k.a. <em>IDB</em> logic) to infer new information from facts already known to be true. This continues until no new information can be extracted. E.g.,</p>
+<p>Then we have <strong>rules</strong> (a.k.a. IDB logic) to infer new information from facts already known to be true. This continues until no new information can be extracted. E.g.,</p>
 
 <pre><code>Ancestor(x, y) &lt;- Parent(x, y).
 </code></pre>
@@ -194,10 +194,15 @@ $ cd ../doop
 
 <p>We frequently analyze various programs from the <a href="http://www.dacapobench.org/">DaCapo Benchmarks suite</a> using a variety of advanced analyses. E.g., let's analyze the <code>antlr</code> benchmark using a <em>2 type-sensitive</em> analysis.</p>
 
-<pre><code>./doop -a 2-type-sensitive+heap -j benchmarks/dacapo-2006/antlr.jar benchmarks/dacapo-2006/antlr-deps.jar  --jre 1.7 --dacapo
+<pre><code>./doop -a 2-type-sensitive+heap -j benchmarks/dacapo-2006/antlr.jar benchmarks/dacapo-2006/antlr-deps.jar --jre 1.7 --dacapo
 </code></pre>
 
 <p>Towards the end of execution, Doop will report a set of metrics gathered from the analyzed program. Those metrics are computed through the use of various queries on the resulting database. Those are found under <code>logic/addons/statistics</code>.</p>
+
+<h5>
+<a id="doop-workflow" class="anchor" href="#doop-workflow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Doop Workflow</h5>
+
+<p>Initially, Doop will pass the given jar files (along with additional ones for the selected library version) to Soot in order to produce the input facts</p>
 
 <h5>
 <a id="query-3" class="anchor" href="#query-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #3</h5>
@@ -213,7 +218,7 @@ $ cd ../doop
 
 <p>The use of <code>_</code> as a predicate parameter denotes that we don't care for a specific value. It represent a parameter that is not bounded.</p>
 
-<p>Datalog supports the use of aggregate functions. One such function is <em>count</em>. E.g., if we would like to compute the total number of VarPointsTo entries we could use the following.</p>
+<p>Datalog supports the use of aggregate functions. One such function is <em>count</em>. E.g., if we would like to compute the total number of VarPointsTo entries we would use the following.</p>
 
 <pre><code>$ bloxbatch -db last-analysis -query \
 '_[] = ?n &lt;- agg&lt;&lt;?n = count()&gt;&gt; VarPointsTo(_, _, _, _).'
