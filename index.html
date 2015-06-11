@@ -130,7 +130,7 @@ $ cd ../doop
 <h3>
 <a id="querying-the-database" class="anchor" href="#querying-the-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Querying the database</h3>
 
-<p>Our first query would be to ask for <em>VarPointTo</em> entries of variables declared in <code>Example.morePlay</code>.</p>
+<p>Our first query would be to ask for <em>VarPointTo</em> entries of variables declared in <em>Example.morePlay()</em>.</p>
 
 <pre><code>$ bl -db last-analysis -query \
 '_(?var, ?heap) &lt;- VarPointsTo(?var, ?heap), Var:DeclaringMethod(?var, "&lt;Example: void morePlay(Cat)&gt;").'
