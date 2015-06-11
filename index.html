@@ -200,11 +200,6 @@ $ cd ../doop
 <p>Towards the end of execution, Doop will report a set of metrics gathered from the analyzed program. Those metrics are computed through the use of various queries on the resulting database. Those are found under <code>logic/addons/statistics</code>.</p>
 
 <h5>
-<a id="doop-workflow" class="anchor" href="#doop-workflow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Doop Workflow</h5>
-
-<p>Initially, Doop will pass the given jar files (along with additional ones for the selected library version) to Soot in order to produce the input facts</p>
-
-<h5>
 <a id="query-3" class="anchor" href="#query-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #3</h5>
 
 <p>For example, one metric is the computation of casts that potentially may fail. It joins input facts as well as facts computed during execution to infer casts where the related variable may point to an object that is incompatible with the type of the cast.</p>
