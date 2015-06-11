@@ -127,11 +127,33 @@ $ cd ../doop
 
 <p>Note here that this rule is <strong>recursive</strong>; previously known facts about the <em>VarPointTo</em> relation may lead to the inference of additional facts. Doop analysis rules are <strong>mutually recursive</strong> in complex ways.</p>
 
-<h2>
-<a id="queries" class="anchor" href="#queries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Queries</h2>
-
 <h3>
-<a id="objects" class="anchor" href="#objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Objects</h3>
+<a id="querying-the-database" class="anchor" href="#querying-the-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Querying the database</h3>
+
+<p>Our first query would be to ask for <em>VarPointTo</em> entries of variables declared in <code>Example.morePlay</code>.</p>
+
+<pre><code>$ bl -db last-analysis -query \
+'_(?var, ?heap) &lt;- VarPointsTo(?var, ?heap), Var:DeclaringMethod(?var, "&lt;Example: void morePlay(Cat)&gt;").'
+  Example.morePlay/@this, Example.main/new Example/0
+  Example.morePlay/r0, Example.main/new Example/0
+  Example.morePlay/r3, Example.test/new Cat/1
+  Example.morePlay/r4, Example.test/new Cat/1
+  Example.morePlay/r1, Example.test/new Cat/1
+  Example.morePlay/@param0, Example.test/new Cat/1
+  Example.morePlay/r2, Example.test/new Cat/2
+  Example.morePlay/r3, Example.test/new Cat/2
+  Example.morePlay/r4, Example.test/new Cat/2
+</code></pre>
+
+<p>The string provided to the <code>-query</code> flag can be a set of left and right arrow Datalog rules. Newly created predicates have to start with <code>_</code> since they will only exist for the duration of the query evaluation. Refmode values can be used directly, and the engine will automatically substitute them with their internal IDs. E.g., the following part</p>
+
+<pre><code>Var:DeclaringMethod(?var, "&lt;Example: void morePlay(Cat)&gt;")
+</code></pre>
+
+<p>is equivalent to</p>
+
+<pre><code>Var:DeclaringMethod(?var, ?method), MethodSignature:Value(?method:"&lt;Example: void morePlay(Cat)&gt;")
+</code></pre>
       </section>
     </div>
 
