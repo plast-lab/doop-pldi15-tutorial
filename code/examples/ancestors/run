@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "making database ..."
+bloxbatch -db DB -create -overwrite
+
+echo "adding logic ..."
+bloxbatch -db DB -addBlock -file ancestors.logic
+
+echo "adding facts ..."
+bloxbatch -db DB -execute -file facts.logic
+
+echo "printing results ..."
+bloxbatch -db DB -print Ancestor
