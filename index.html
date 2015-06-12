@@ -34,9 +34,9 @@
         <h2>
 <a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
 
-<p><a href="http://doop.program-analysis.org/">Doop</a> is a <strong>declarative</strong> framework for Static Analysis of Java programs, centered on a variety of <strong>pointer analysis</strong> algorithms. Doop provides a huge variety of analyses and also the surrounding scaffolding to run an analysis end-to-end (fact generation, processing, statistics, etc.).</p>
+<p><a href="http://doop.program-analysis.org/">Doop</a> is a <strong>declarative</strong> framework for static analysis of Java programs, centered on <strong>pointer analysis</strong> algorithms. Doop provides a large variety of analyses and also the surrounding scaffolding to run an analysis end-to-end (fact generation, processing, statistics, etc.).</p>
 
-<p>The declarative nature of Doop stems from its use of <strong>Datalog</strong> (more specifically <em>LogiQL</em>, a Datalog dialect developed by <a href="http://www.logicblox.com/">LogicBlox</a>) to specify an analysis.</p>
+<p>The declarative nature of Doop stems from its use of <strong>Datalog</strong> (more specifically, <em>LogiQL</em>, a Datalog dialect developed by <a href="http://www.logicblox.com/">LogicBlox</a>) to specify an analysis.</p>
 
 <p>The building blocks of Datalog programs come in the form of <strong>predicates</strong>. Our input facts (a.k.a. EDB logic) are represented as predicate values, e.g., <code>Person("John")</code> or <code>Parent("John", "Johnny jr")</code>.</p>
 
@@ -52,9 +52,9 @@
 
 <p>Doop is available at bitbucket as a <a href="https://bitbucket.org/yanniss/doop">public repo</a>.</p>
 
-<p>Please use LogicBlox engine version 3.10.X for this tutorial and download+unpack the main tutorial file from the links at the top of the page. Put the engine (or a symbolic link to it) under the directory <code>code</code>. Also, clone Doop under the same directory. If you are following this tutorial off-line, the relevant files should exist in the archive you copied.</p>
+<p>Please use LogicBlox engine version 3.10.X for this tutorial and download+unpack the main tutorial file from the links at the top of the page. Put the engine (or a symbolic link to it) under the directory <code>code</code>. Also, clone Doop under the same directory. If you are following this tutorial at its PLDI slot, the relevant files should exist in the archive you copied.</p>
 
-<p>Issue the following command to setup the environment.</p>
+<p>Issue the following command to set up the environment.</p>
 
 <pre><code>$ source code/environment.sh
 </code></pre>
@@ -62,7 +62,7 @@
 <h2>
 <a id="toy-example" class="anchor" href="#toy-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Toy Example</h2>
 
-<p>We want to compute the ancestors for a set of people. Our rules (left-arrow notation) along with their type declarations (right-arrow notation) are in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/master/code/examples/ancestors/ancestors.logic">ancestors.logic</a>. Our facts (a.k.a. delta logic) are in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/master/code/examples/ancestors/facts.logic">facts.logic</a>. The <code>+</code> operator in front of the delta predicates denotes that we want to add facts to our database (we could also remove or update facts).</p>
+<p>We want to compute the ancestors for a set of people. Our rules (left-arrow notation) along with their type declarations (right-arrow notation) are in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/master/code/examples/ancestors/ancestors.logic">ancestors.logic</a>. Our input facts (a.k.a. delta logic) are in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/master/code/examples/ancestors/facts.logic">facts.logic</a>. The <code>+</code> operator in front of the delta predicates denotes that we want to add facts to our database (we could also remove or update facts).</p>
 
 <p>We invoke actions on our Datalog engine using <code>bloxbatch</code>.</p>
 
@@ -159,7 +159,7 @@ $ cd ../doop
 <pre><code>Var:DeclaringMethod(?var, ?method), MethodSignature:Value(?method:"&lt;Example: void morePlay(Cat)&gt;")
 </code></pre>
 
-<p>Note here that Doop analyzes Java <strong>bytecode</strong>. Input facts are generated using Soot, which transforms Java bytecode to <a href="http://en.wikipedia.org/wiki/Soot_%28software%29#Jimple">Jimple</a>, a language based on <em>three address code</em>. As a result new temp variables are introduced and also original variable names might be lost (they can be retained through specific flags in javac and Soot).</p>
+<p>Note here that Doop analyzes Java <strong>bytecode</strong>. Input facts are generated using Soot, which transforms Java bytecode to <a href="http://en.wikipedia.org/wiki/Soot_%28software%29#Jimple">Jimple</a>, a language based on <em>three address code</em>. As a result new temporary variables are introduced and also original variable names might be lost (they can be retained through specific flags in javac and Soot).</p>
 
 <hr>
 
@@ -212,7 +212,7 @@ $ cd ../doop
     ! AssignCompatible(?type, ?heaptype).
 </code></pre>
 
-<p>The use of <code>_</code> as a predicate parameter denotes that we don't care for a specific value. It represent a parameter that is not bounded.</p>
+<p>The use of <code>_</code> as a predicate parameter denotes that we don't care for a specific value. It represent a parameter that is not bound.</p>
 
 <p>The above query can be found isolated in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/master/code/examples/query3.logic">query3.logic</a>.</p>
 
@@ -222,7 +222,7 @@ $ cd ../doop
 <h4>
 <a id="aggregate-functions" class="anchor" href="#aggregate-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aggregate Functions</h4>
 
-<p>Datalog supports the use of aggregate functions. One such function is <em>count</em>. E.g., if we would like to compute the total number of VarPointsTo entries we would use the following.</p>
+<p>Datalog supports the use of aggregation functions. One such function is <em>count</em>. E.g., if we would like to compute the total number of VarPointsTo entries we would use the following.</p>
 
 <pre><code>$ bloxbatch -db last-analysis -query \
 '_[] = ?n &lt;- agg&lt;&lt;?n = count()&gt;&gt; VarPointsTo(_, _, _, _).'
