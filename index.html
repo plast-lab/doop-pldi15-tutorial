@@ -131,8 +131,8 @@ $ cd ../doop
 <h3>
 <a id="accessing-the-database" class="anchor" href="#accessing-the-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Accessing the database</h3>
 
-<h5>
-<a id="query-1" class="anchor" href="#query-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #1</h5>
+<h4>
+<a id="query-1" class="anchor" href="#query-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #1</h4>
 
 <p>Our first query is to ask for <em>VarPointTo</em> entries of variables declared in <em>Example.morePlay()</em>.</p>
 
@@ -163,8 +163,8 @@ $ cd ../doop
 
 <hr>
 
-<h5>
-<a id="query-2" class="anchor" href="#query-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #2</h5>
+<h4>
+<a id="query-2" class="anchor" href="#query-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #2</h4>
 
 <p>A more advanced query can be found in <a href="https://raw.githubusercontent.com/plast-lab/doop-pldi15-tutorial/master/code/examples/query2.logic">query2.logic</a>. Essentially, we compute a transitive closure on the <em>CallGraphEdge</em> relation. The logic used in a query can be as complicated as in any "normal" Datalog program.</p>
 
@@ -200,8 +200,8 @@ $ cd ../doop
 
 <p>Towards the end of execution, Doop will report a set of metrics gathered from the analyzed program. Those metrics are computed through the use of various queries on the resulting database. Those are found under <code>logic/addons/statistics</code>.</p>
 
-<h5>
-<a id="query-3" class="anchor" href="#query-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #3</h5>
+<h4>
+<a id="query-3" class="anchor" href="#query-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #3</h4>
 
 <p>For example, one metric is the computation of casts that potentially may fail. It joins input facts as well as facts computed during execution to infer casts where the related variable may point to an object that is incompatible with the type of the cast.</p>
 
@@ -219,8 +219,8 @@ $ cd ../doop
 <pre><code>$ bloxbatch -db last-analysis -query -file ../examples/query3.logic
 </code></pre>
 
-<h5>
-<a id="aggregate-functions" class="anchor" href="#aggregate-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aggregate Functions</h5>
+<h4>
+<a id="aggregate-functions" class="anchor" href="#aggregate-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aggregate Functions</h4>
 
 <p>Datalog supports the use of aggregate functions. One such function is <em>count</em>. E.g., if we would like to compute the total number of VarPointsTo entries we would use the following.</p>
 
