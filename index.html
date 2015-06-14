@@ -148,7 +148,7 @@ predicate: FieldPointsTo(HeapAllocation, FieldSignature, HeapAllocation)
 
 <p>Doop represents (and abstracts away) objects by using their allocation point in the program. <code>Example.test/new Cat/1</code> refers to the <em>second</em> (zero-based indexing) <em>Cat</em> object allocated inside method <em>Example.test()</em>.</p>
 
-<p>As expected, the <code>parent</code> field of the first Cat object may point to the second Cat object.</p>
+<p>As expected, the <code>parent</code> field of the second Cat object may point to the third Cat object.</p>
 
 <h4>
 <a id="query-1" class="anchor" href="#query-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #1</h4>
