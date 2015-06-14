@@ -134,7 +134,7 @@ $ cd ../doop
 <p>After the end of an analysis, a symbolic link for the resulting database can be found under the <code>results</code> directory. Also, for convenience, a second symbolic link is created at top level called <code>last-analysis</code>, each time pointing to the latest successful analysis.</p>
 
 <h4>
-<a id="get-a-predicates-entries" class="anchor" href="#get-a-predicates-entries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get a predicate's entries</h4>
+<a id="printing-a-predicate" class="anchor" href="#printing-a-predicate" aria-hidden="true"><span class="octicon octicon-link"></span></a>Printing a predicate</h4>
 
 <p>As we already saw, the easiest way to interact with the database is to simply print all the entries of a certain predicate.</p>
 
@@ -146,7 +146,7 @@ predicate: FieldPointsTo(HeapAllocation, FieldSignature, HeapAllocation)
 \---- end of FieldPointsTo facts ----/
 </code></pre>
 
-<p>Doop represents (and abstracts away) objects by using their allocation point in the program. <code>Example.test/new Cat/1</code> refers to the object allocated inside method <em>Example.test()</em>, which is of type <em>Cat</em> and its allocation is the first one inside that method.</p>
+<p>Doop represents (and abstracts away) objects by using their allocation point in the program. <code>Example.test/new Cat/1</code> refers to the <em>second</em> (zero-based indexing) <em>Cat</em> object allocated inside method <em>Example.test()</em>.</p>
 
 <p>As expected, the <code>parent</code> field of the first Cat object may point to the second Cat object.</p>
 
