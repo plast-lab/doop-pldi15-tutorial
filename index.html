@@ -134,6 +134,23 @@ $ cd ../doop
 <p>After the end of an analysis, a symbolic link for the resulting database can be found under the <code>results</code> directory. Also, for convenience, a second symbolic link is created at top level called <code>last-analysis</code>, each time pointing to the latest successful analysis.</p>
 
 <h4>
+<a id="printing-a-predicate" class="anchor" href="#printing-a-predicate" aria-hidden="true"><span class="octicon octicon-link"></span></a>Printing a predicate</h4>
+
+<p>As we already saw, the easiest way to interact with the database is to simply print all the entries of a certain predicate.</p>
+
+<pre><code>$  bloxbatch -db last-analysis -print FieldPointsTo
+predicate: FieldPointsTo(HeapAllocation, FieldSignature, HeapAllocation)
+...
+/--- start of FieldPointsTo facts ---\
+  [113914]Example.test/new Cat/1, [11417]&lt;Cat: Cat parent&gt;, [113915]Example.test/new Cat/2
+\---- end of FieldPointsTo facts ----/
+</code></pre>
+
+<p>Doop represents (and abstracts away) objects by using their allocation point in the program. <code>Example.test/new Cat/1</code> refers to the object allocated inside method <em>Example.test</em>, which is of type <em>Cat</em> and it is the first allocation inside the method.</p>
+
+<p>As expected, the <code>parent</code> field of the first Cat object may point to the second Cat object.</p>
+
+<h4>
 <a id="query-1" class="anchor" href="#query-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Query #1</h4>
 
 <p>Our first query is to ask for <em>VarPointTo</em> entries of variables declared in <em>Example.morePlay()</em>.</p>
